@@ -1,4 +1,4 @@
-const ss = SpredsheetApp.openById("14DOT3AB2vCMQFLmaQTfr8bKIFHYjStsXDyKPQvDA_kA");
+const ss = SpreadsheetApp.openById("14DOT3AB2vCMQFLmaQTfr8bKIFHYjStsXDyKPQvDA_kA");
 function doGet() {
     const htmlTemplate = HtmlService.createTemplateFromFile('index');
     const title = ss.getName();
