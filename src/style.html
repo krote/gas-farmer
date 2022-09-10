@@ -1,0 +1,45 @@
+<style>
+  ::-webkit-scrollbar {
+    background: transparent;  
+    height: 10px;
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: none;
+    background: #bbb;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    min-height: 40px;
+  }
+
+  thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+    background-color: #ddd;
+  }
+
+  .btn {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    color: white;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.4;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    transition: 200ms;
+    user-select: none;
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+  }
+
+  .btn:active {
+    opacity: 1;
+  }
+</style>

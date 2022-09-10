@@ -1,5 +1,9 @@
-function myFunction() {
-  Logger.log('Hello Gas!');
+const ss = SpredsheetApp.getActiveSpreadsheet();
+function doGet() {
+    const htmlTemplate = HtmlService.createTemplateFromFile('index');
+    const title = ss.getName();
+    htmlTemplate.title = title;
+    return htmlTemplate.evaluate().setTitle(title);
 }
 
 function getAmedas( param_pref_ja, param_address) {
