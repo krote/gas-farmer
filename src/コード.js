@@ -6,6 +6,12 @@ function doGet() {
     return htmlTemplate.evaluate().setTitle(title);
 }
 
+function getSheetData() {
+    const sh = ss.getSheetByName("設定");
+    const response = JSON.stringify(sh.getDataRange().getValues());
+    return response
+  }
+
 function getAmedas( param_pref_ja, param_address) {
     var requestUrl = "https://jjwd.info/api/v2/stations/search?pref_ja=" + param_pref_ja;
     if(param_address != null && param_address != ""){
