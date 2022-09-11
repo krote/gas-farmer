@@ -9,7 +9,7 @@ function doGet() {
 function getSheetData() {
     const sh = ss.getSheetByName("設定");
     const response = JSON.stringify(sh.getDataRange().getValues());
-    return response
+    return response;
 }
 
 function getVarieties() {
