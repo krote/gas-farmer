@@ -4,56 +4,35 @@
   <base target="_top">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--  <?!= HtmlService.createHtmlOutputFromFile('style').getContent(); ?>-->
-<style>
-    ::-webkit-scrollbar {
-      background: transparent;  
-      height: 10px;
-      width: 8px;
-    }
-  
-    ::-webkit-scrollbar-thumb {
-      border: none;
-      background: #bbb;
-      -webkit-border-radius: 8px;
-      border-radius: 8px;
-      min-height: 40px;
-    }
-  
-    thead th {
-      position: -webkit-sticky;
-      position: sticky;
-      top: -1px;
-      background-color: #ddd;
-    }
-  
-    .btn {
-      position: fixed;
-      width: 50px;
-      height: 50px;
-      color: white;
-      border-radius: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0.4;
-      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-      transition: 200ms;
-      user-select: none;
-    }
-  
-    .btn:hover {
-      opacity: 0.9;
-    }
-  
-    .btn:active {
-      opacity: 1;
-    }
-  </style>
+  <?!= HtmlService.createHtmlOutputFromFile('style').getContent(); ?>
   </head>
 <body>
   <div id="app">
     <div style="display: flex;">
+        <div id="predict_conditions">
+            <!-- 簡易計算領域 -->
+            <h1 class="title is-4" style="margin-top: 50px;">
+                <span class="material-icons">grass</span>
+                計算
+            </h1>
+            <label>品種を選択</label>
+            <select v-model="variety" class="select is-small">
+                <option value="">選択なし</option>
+                <option v-for="variety in getVarieties()" :value="variety">{{ variety }}</option>
+            </select>
+            <label>日付を選択</label>
+            <input type="date" v-model="predict_date" />
+            <div
+                @click="predictGrowthAndDevelopment()"
+                class="btn"
+                style="bottom: 30px; right: 30px; background-color: #5de83a;"
+            >
+                <span class="material-icons">calculate</span>
+            </div>
+            <div class="predict_result">
+                計算結果
+            </div>
+        </div>
       <!-- フィルタエリア -->
       <div style="
         width: 300px;
@@ -207,6 +186,9 @@
           download.click();
           (window.URL || window.webkitURL).revokeObjectURL(url);
         },
+        predictGrowthAndDevelopment: function(){
+
+        }
         // フォームタイプをチェックする
         isHidden: function(key){ return /^.*:hidden/.test(key) },
         isSelect: function(key){ return /^.*:select\[.*\]$/.test(key) },
@@ -217,6 +199,14 @@
           const param = /:(select|radio|checkbox)\[.*\]$/.exec(key)   // param[0] => ':select["A","B","C"]'
           const optionsString = /\[.*\]/.exec(param[0])               // optionsString[0] => '["A","B","C"]'
           return JSON.parse(optionsString[0])                         // return => ["A","B","C"]
+        },
+        getVarieties: function(){
+            google.script.run.withSuccessHandler(function(text) {
+                const response = JSON.parse(text)
+                app.varieties = response.slice(1);
+                app.varieties.splice();
+            }).getVarieties();
+            return JSON.parse(app.varieties)            
         }
       }
     })
