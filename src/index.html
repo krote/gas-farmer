@@ -182,6 +182,7 @@
         },
         mounted: function(){
           google.script.run.withSuccessHandler(function(text) {
+            alert("text: " + text);
             const response = JSON.parse(text)
             app.keys = response[0];
             app.records = response.slice(1);
@@ -247,7 +248,7 @@
                   app.varieties = response.slice(1);
                   app.varieties.splice();
               }).getVarieties();
-              console.log("varieties: " + response);
+              alert("varieties: " + response);
               return JSON.parse(app.varieties)
           }
         }
