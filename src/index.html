@@ -191,7 +191,7 @@
               app.initConditions();
             })
             .getSheetData();
-          alert("keys: " + app.keys);
+          alert("keys: " + app.data.keys);
           google.script.run
             .withSuccessHandler(function (text) {
               const response = JSON.parse(text);
@@ -199,7 +199,7 @@
               app.varieties.splice();
             })
             .getVarieties();
-          alert("varieties: " + app.varieties);
+          alert("varieties: " + app.data.varieties);
         },
         methods: {
           // フィルタ条件を初期化する
