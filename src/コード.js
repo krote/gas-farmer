@@ -7,7 +7,7 @@ function doGet() {
 }
 
 function getSheetData() {
-    const sh = ss.getSheetByName("品種");
+    const sh = ss.getSheetByName("data");
     const response = JSON.stringify(sh.getDataRange().getValues());
     return response;
 }

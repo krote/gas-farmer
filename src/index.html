@@ -24,7 +24,7 @@
           <label>品種を選択</label>
           <select v-model="variety" class="select is-small">
             <option value="">選択なし</option>
-            <option v-for="variety in getVarieties()" :value="variety">
+            <option v-for="variety in varieties" :value="variety">
               {{ variety }}
             </option>
           </select>
@@ -174,49 +174,65 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script>
       var app = new Vue({
-        el: '#app',
+        el: "#app",
         data: {
-          keys: [],         // シートの1行目
-          records: [],      // シートの2行目以降
-          conditions: [],   // 入力した絞込条件
+          keys: [], // シートの1行目
+          records: [], // シートの2行目以降
+          conditions: [], // 入力した絞込条件
         },
-        mounted: function(){
-          google.script.run.withSuccessHandler(function(text) {
-            alert("text: " + text);
-            const response = JSON.parse(text)
-            app.keys = response[0];
-            app.records = response.slice(1);
-            app.records.splice();
-            app.initConditions();
-          }).getSheetData();
+        mounted: function () {
+          google.script.run
+            .withSuccessHandler(function (text) {
+              const response = JSON.parse(text);
+              app.keys = response[0];
+              app.records = response.slice(1);
+              app.records.splice();
+              app.initConditions();
+            })
+            .getSheetData();
+          alert("keys: " + app.keys);
+          google.script.run
+            .withSuccessHandler(function (text) {
+              const response = JSON.parse(text);
+              app.varieties = response.slice(1);
+              app.varieties.splice();
+            })
+            .getVarieties();
+          alert("varieties: " + app.varieties);
         },
         methods: {
           // フィルタ条件を初期化する
-          initConditions: function(){
+          initConditions: function () {
             this.conditions = app.keys.map((key) => {
-              return app.isCheckbox(key)
-                ? []
-                : ""
-            })
+              return app.isCheckbox(key) ? [] : "";
+            });
           },
           // レコードが全ての絞込条件に合致するかチェックする
-          checkCondition: function(record){
-            for (let i = 0; i < this.keys.length; i++){
-              if ( this.isCheckbox(this.keys[i]) ){
-                if (this.conditions[i].length && !this.conditions[i].includes(record[i])) return false;
+          checkCondition: function (record) {
+            for (let i = 0; i < this.keys.length; i++) {
+              if (this.isCheckbox(this.keys[i])) {
+                if (
+                  this.conditions[i].length &&
+                  !this.conditions[i].includes(record[i])
+                )
+                  return false;
               } else {
-                if ( this.conditions[i] && !record[i].includes(this.conditions[i])) return false;
+                if (
+                  this.conditions[i] &&
+                  !record[i].includes(this.conditions[i])
+                )
+                  return false;
               }
             }
             return true;
           },
           // CSVファイルをダウンロードする
-          downloadCSV: function(){
+          downloadCSV: function () {
             const filename = "data.csv";
-            let data = '\"' + this.keys.join('\",\"') + '\"\r\n';
-            for (const record of this.records){
-              if ( this.checkCondition(record) ){
-                data += '\"' + record.join('\",\"') + '\"\r\n';
+            let data = '"' + this.keys.join('","') + '"\r\n';
+            for (const record of this.records) {
+              if (this.checkCondition(record)) {
+                data += '"' + record.join('","') + '"\r\n';
               }
             }
             const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
@@ -228,31 +244,28 @@
             download.click();
             (window.URL || window.webkitURL).revokeObjectURL(url);
           },
-          predictGrowthAndDevelopment: function(){
-
-          },
+          predictGrowthAndDevelopment: function () {},
           // フォームタイプをチェックする
-          isHidden: function(key){ return /^.*:hidden/.test(key) },
-          isSelect: function(key){ return /^.*:select\[.*\]$/.test(key) },
-          isRadio: function(key){ return /^.*:radio\[.*\]$/.test(key) },
-          isCheckbox: function(key){ return /^.*:checkbox\[.*\]$/.test(key) },
-          // シートの項目名末尾に付与した選択肢の配列を返す
-          getOptions: function(key){
-            const param = /:(select|radio|checkbox)\[.*\]$/.exec(key)   // param[0] => ':select["A","B","C"]'
-            const optionsString = /\[.*\]/.exec(param[0])               // optionsString[0] => '["A","B","C"]'
-            return JSON.parse(optionsString[0])                         // return => ["A","B","C"]
+          isHidden: function (key) {
+            return /^.*:hidden/.test(key);
           },
-          getVarieties: function(){
-              google.script.run.withSuccessHandler(function(text) {
-                  const response = JSON.parse(text)
-                  app.varieties = response.slice(1);
-                  app.varieties.splice();
-              }).getVarieties();
-              alert("varieties: " + response);
-              return JSON.parse(app.varieties)
-          }
-        }
-      })
+          isSelect: function (key) {
+            return /^.*:select\[.*\]$/.test(key);
+          },
+          isRadio: function (key) {
+            return /^.*:radio\[.*\]$/.test(key);
+          },
+          isCheckbox: function (key) {
+            return /^.*:checkbox\[.*\]$/.test(key);
+          },
+          // シートの項目名末尾に付与した選択肢の配列を返す
+          getOptions: function (key) {
+            const param = /:(select|radio|checkbox)\[.*\]$/.exec(key); // param[0] => ':select["A","B","C"]'
+            const optionsString = /\[.*\]/.exec(param[0]); // optionsString[0] => '["A","B","C"]'
+            return JSON.parse(optionsString[0]); // return => ["A","B","C"]
+          },
+        },
+      });
     </script>
   </body>
 </html>
