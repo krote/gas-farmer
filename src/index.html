@@ -25,7 +25,7 @@
             <div
                 @click="predictGrowthAndDevelopment()"
                 class="btn"
-                style="bottom: 30px; right: 30px; background-color: #5de83a;"
+                style="background-color: #5de83a;"
             >
                 <span class="material-icons">calculate</span>
             </div>
@@ -206,6 +206,7 @@
                 app.varieties = response.slice(1);
                 app.varieties.splice();
             }).getVarieties();
+            console.log("varieties: " + response);
             return JSON.parse(app.varieties)            
         }
       }
