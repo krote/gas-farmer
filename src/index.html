@@ -14,7 +14,13 @@
   </head>
   <body>
     <div id="app">
-        <div id="predict_conditions">
+        <div id="predict_conditions"
+            style="
+            height: 100px;
+            background-color: #fafafab0;
+            padding: 0 30px;
+            overflow: auto;
+          ">
             <!-- 簡易計算領域 -->
             <h1 class="title is-4" style="margin-top: 50px">
               <span class="material-icons">grass</span>
@@ -243,7 +249,9 @@
             download.click();
             (window.URL || window.webkitURL).revokeObjectURL(url);
           },
-          predictGrowthAndDevelopment: function () {},
+          predictGrowthAndDevelopment: function () {
+
+          },
           // フォームタイプをチェックする
           isHidden: function (key) {
             return /^.*:hidden/.test(key);
