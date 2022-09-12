@@ -24,13 +24,12 @@
           <label>品種を選択</label>
           <select v-model="variety" class="select is-small">
             <option value="">選択なし</option>
-            <option v-for="variety in varieties" :value="variety">
+<!--            <option v-for="variety in varieties" :value="variety">
               {{ variety }}
             </option>
-          </select>
+-->          </select>
           <label>日付を選択</label>
           <input type="date" v-model="predict_date" />
-<!--
           <div
             @click="predictGrowthAndDevelopment()"
             class="btn"
@@ -38,7 +37,6 @@
           >
             <span class="material-icons">calculate</span>
           </div>
--->
           <div class="predict_result">計算結果</div>
         </div>
         <!-- フィルタエリア -->
