@@ -191,15 +191,14 @@
               app.initConditions();
             })
             .getSheetData();
-          alert("keys: " + app.data.keys);
-          google.script.run
+/*          google.script.run
             .withSuccessHandler(function (text) {
               const response = JSON.parse(text);
               app.varieties = response.slice(1);
               app.varieties.splice();
             })
             .getVarieties();
-          alert("varieties: " + app.data.varieties);
+          alert("varieties: " + app.data.varieties);*/
         },
         methods: {
           // フィルタ条件を初期化する
