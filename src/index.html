@@ -14,7 +14,7 @@
   </head>
   <body>
     <div id="app">
-      <div style="display: flex">
+      <div style="display: flex; flex-direction: column;">
         <div id="predict_conditions">
           <!-- 簡易計算領域 -->
           <h1 class="title is-4" style="margin-top: 50px">
@@ -22,16 +22,14 @@
             計算
           </h1>
           <label>品種を選択</label>
-<!--
-          <select v-model="variety" class="select is-small">
+          <select class="select is-small">
             <option value="">選択なし</option>
             <option v-for="variety in varieties" :value="variety">
               {{ variety }}
             </option>
           </select>
--->
           <label>日付を選択</label>
-          <input type="date" v-model="predict_date" />
+          <input type="date" />
           <div
             @click="predictGrowthAndDevelopment()"
             class="btn"
