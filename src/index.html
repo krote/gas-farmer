@@ -16,7 +16,7 @@
     <div id="app">
         <div id="predict_conditions"
             style="
-            height: 100px;
+            height: 150px;
             background-color: #fafafab0;
             padding: 0 30px;
             overflow: auto;
@@ -256,10 +256,7 @@
             google.script.run
               .withSuccessHandler(function (text) {
                 const response = JSON.parse(text);
-                app.keys = response[0];
-                app.records = response.slice(1);
-                app.records.splice();
-                app.initConditions();
+                alert(response);
               })
               .predictGrowthAndDevelopment();
 

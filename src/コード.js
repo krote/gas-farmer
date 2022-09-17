@@ -26,4 +26,8 @@ function getAmedas( param_pref_ja, param_address) {
     var response = UrlFetchApp.fetch(requestUrl);
     var res = JSON.parse(response.getContentText());
     return res;
-  }
+}
+
+function predictGrowthAndDevelopment(){
+    return "called predictGrowthAndDevelopment";
+}
