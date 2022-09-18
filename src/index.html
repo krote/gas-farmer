@@ -29,7 +29,7 @@
             <label>品種を選択</label>
             <select class="select is-small">
               <option value="">選択なし</option>
-              <option v-for="variety in getOptions(varieties)" :value="variety">
+              <option v-for="variety in varieties" :value="variety">
                 {{ variety }}
               </option>
             </select>
