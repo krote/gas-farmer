@@ -29,5 +29,5 @@ function getAmedas( param_pref_ja, param_address) {
 }
 
 function predictGrowthAndDevelopment(){
-    return "called predictGrowthAndDevelopment";
+    return "{text: called predictGrowthAndDevelopment}";
 }
