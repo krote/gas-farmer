@@ -16,7 +16,7 @@
     <div id="app">
         <div id="predict_conditions"
             style="
-            height: 150px;
+            height: 200px;
             background-color: #fafafab0;
             padding: 0 30px;
             overflow: auto;
@@ -29,7 +29,7 @@
             <label>品種を選択</label>
             <select class="select is-small">
               <option value="">選択なし</option>
-              <option v-for="variety in varieties" :value="variety">
+              <option v-for="variety in getOptions(varieties)" :value="variety">
                 {{ variety }}
               </option>
             </select>
@@ -256,7 +256,7 @@
             google.script.run
               .withSuccessHandler(function (text) {
                 const response = JSON.parse(text);
-                alert(response);
+                alert(response.message);
               })
               .predictGrowthAndDevelopment();
 
